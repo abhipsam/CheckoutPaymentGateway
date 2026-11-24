@@ -78,14 +78,11 @@ store.
 If the bank is unreachable or returns its `503`, that's a gateway-level failure
 distinct from all three defined outcomes - nothing is persisted for it either.
 
-**Bounded retry on the bank call, but only where it's safe.** `AcquiringBankHttpClient`
-retries (3 attempts, short backoff) on the bank's own `503` and on a refused/
-unestablished connection - both cases where nothing was authorized. It
-deliberately does **not** retry on a read timeout: the request may have already
-reached the bank and been authorized, and retrying blind could cause a double
-authorization with no way to detect it from our side.
+**Bounded retry on the bank call (3 attempts) on `503`/connection-refused only,
+not on a read timeout**, since a timeout can't rule out the bank already
+authorized the card.
 
-**Idempotency via an optional `Idempotency-Key` header** - not spec-required.
+**Idempotency via an optional `Idempotency-Key` header.**
 A repeat of the same key with the same body replays the original response
 (no second bank call); a different body under the same key returns `409`.
 Only a SHA-256 fingerprint of the request is stored, never the card data itself.
