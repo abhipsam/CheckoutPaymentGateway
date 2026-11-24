@@ -1,0 +1,83 @@
+package com.checkout.paymentgateway.dto;
+
+import com.checkout.paymentgateway.domain.PaymentStatus;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.UUID;
+
+/**
+ * Shared response shape for both POST /payments (on success) and GET /payments/{id} -
+ * the spec defines identical fields for both, so one DTO serves both endpoints.
+ */
+public class PaymentResponse {
+
+    private UUID id;
+    private PaymentStatus status;
+
+    @JsonProperty("card_number_last_four")
+    private String cardNumberLastFour;
+
+    @JsonProperty("expiry_month")
+    private int expiryMonth;
+
+    @JsonProperty("expiry_year")
+    private int expiryYear;
+
+    private String currency;
+    private int amount;
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public PaymentStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(PaymentStatus status) {
+        this.status = status;
+    }
+
+    public String getCardNumberLastFour() {
+        return cardNumberLastFour;
+    }
+
+    public void setCardNumberLastFour(String cardNumberLastFour) {
+        this.cardNumberLastFour = cardNumberLastFour;
+    }
+
+    public int getExpiryMonth() {
+        return expiryMonth;
+    }
+
+    public void setExpiryMonth(int expiryMonth) {
+        this.expiryMonth = expiryMonth;
+    }
+
+    public int getExpiryYear() {
+        return expiryYear;
+    }
+
+    public void setExpiryYear(int expiryYear) {
+        this.expiryYear = expiryYear;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+}
