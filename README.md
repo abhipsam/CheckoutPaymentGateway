@@ -90,6 +90,9 @@ Only a SHA-256 fingerprint of the request is stored, never the card data itself.
 **Single-merchant assumption** - no merchant/tenant concept, no auth;
 `PaymentRepository` and `IdempotencyStore` are global, shared by every caller.
 
+**No API authentication/authorization.** Both endpoints are open to anyone
+who can reach them - no API key, no OAuth, no rate limiting.
+
 ## Testing
 
 - **Unit** - `PaymentRequestValidatorTest`, `PaymentMapperTest`,
